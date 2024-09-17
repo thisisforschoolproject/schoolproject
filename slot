@@ -1,0 +1,72 @@
+import random
+
+# slot machine's numbers
+slot1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+slot2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+slot3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+
+print('***********************************************')
+mybalance = int(input('Enter your balance' + '\n : '))
+slotmoney = 0
+winmultiply = 10
+profit = 0
+
+
+def slotresult():
+    part1 = random.choice(slot1)
+    part2 = random.choice(slot2)
+    part3 = random.choice(slot3)
+    print('-------')
+    print(f'|{part1}|{part2}|{part3}|')
+    print('-------')
+    if part1 == part2 == part3:
+        win = True
+        return win
+    else:
+        win = False
+        return win
+
+
+def randomslot(win):
+    global slotmoney
+    global mybalance
+    global profit
+    if win:
+        print('You won!')
+        mybalance += price*winmultiply
+        profit += price*winmultiply
+        slotlose = price*winmultiply
+        print('my money total : ' + str(mybalance))
+        slotmoney -= slotlose
+        print('***********************************************')
+    else:
+        print('You lose')
+        mybalance -= price
+        slotmoney += price
+        print('my money total : ' + str(mybalance))
+        print('***********************************************')
+
+
+while True:
+    if mybalance >= 1:
+        price = int(input('Enter price (at least 1)(Your balance is ' + str(mybalance) + ')\n : '))
+        if price >= 1:
+            if mybalance >= price:
+                win = slotresult()
+                randomslot(win)
+
+        playagain = input('play again? (y/n)' + '\n : ').lower()
+        if str(playagain) != 'y':
+            print('============================================')
+            print('your money total : ' + str(mybalance))
+            if slotmoney <= 0:
+                print('your profit : ' + str(profit))
+                print('============================================')
+            elif slotmoney >= 0:
+                print('your loss : ' + str(slotmoney))
+                print('============================================')
+            break
+
+    else:
+        print('not enough money')
+        break
